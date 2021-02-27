@@ -45,16 +45,5 @@ switch method
         
 end
 
-samples = [4500, 11000, 19500, 32000];
-for i=1:length(samples)
-    figure
-    w=linspace(0,pi);
-    [magf,~,wf]=dbode(theta_hat(samples(i),:),1,1,w);
-    plt = semilogy(wf, magf.^2);
-    set(plt, 'LineWidth', 1.5)
-    title('LMS adaptive filter response')
-    xlabel('Frequency (rad/s)')
-    ylabel('Magnitude')
-    grid on
-    set(gca,'FontSize', 12)
-end
+for i=1:400:
+theta_hat

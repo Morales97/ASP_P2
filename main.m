@@ -9,7 +9,7 @@ cd ..
 soundsc(s,fs)
 
 %% LMS
-N = 100;
+N = 150;
 D = 100;
 muu = 0.002;
 
