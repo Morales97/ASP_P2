@@ -54,5 +54,5 @@ figure
 plot_spectral_estimates(s, M, 'Input signal s(n)')
 plot_spectral_estimates(y_hat, M, 'Estimated noise tones y(n)')
 plot_spectral_estimates(e_hat, M, 'Estimated speech e(n)')
-title('ALE using a plain low pass filter')
+title('
 
