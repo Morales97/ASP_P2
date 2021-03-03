@@ -21,7 +21,7 @@ function [theta_hat, y_hat, e_hat] = ale(s, N, D, muu_lambda, method, ...
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+% ------------------------------------------------
 % ------------- Adaptive filtering ---------------
 % ------------------------------------------------
 
@@ -62,7 +62,7 @@ switch method
         disp('No adaptive algorithm selected')
 end
 
-
+% ------------------------------------------------
 % ----------- Parametric estimation  -------------
 % ------------------------------------------------
 
@@ -77,4 +77,9 @@ if show
     subplot_spectral_estimates(s, M, 'Input signal s(n)', method)
     subplot_spectral_estimates(y_hat, M, 'Estimated noise tones y(n)', method)
     subplot_spectral_estimates(e_hat, M, 'Estimated speech e(n)', method)
+% 	figure
+%     plot_spectral_estimates(s(5000:12000), M, 'Input signal s(n)')
+%     plot_spectral_estimates(y_hat(5000:12000), M, 'RLS estimated noise tones y(n)')
+%     plot_spectral_estimates(e_hat(5000:12000), M, 'Estimated speech e(n)')
+
 end

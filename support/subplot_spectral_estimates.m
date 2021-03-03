@@ -27,7 +27,7 @@ w=linspace(0, pi, 512);
 subplot(2,2,1)
 sgtitle(sprintf('%s - Spectrum estimation (AR-50)', algo_name))
 semilogy(ws1,mags1.^2*sigma2_hat_s1, 'LineWidth', 1.5, 'DisplayName', legend_name);
-title('Segement 1')
+title('Segment 1')
 xlabel('Frequency (rad/s)')
 ylabel('Magnitude')
 hold on

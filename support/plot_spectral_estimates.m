@@ -8,7 +8,7 @@ w=linspace(0, pi, 512);
 [magfull,~,wfull]=dbode(1,A_hat_full,1,w);
 
 semilogy(wfull,magfull.^2*sigma2_hat_full, 'LineWidth', 1.5, 'DisplayName', legend_name);
-title('Spectrum estimate of s1(n) (AR-M)')
+title('RLS - Spectrum of segment 2 (samples 5k-12k)')
 xlabel('Frequency (rad/s)')
 ylabel('Magnitude')
 grid on
