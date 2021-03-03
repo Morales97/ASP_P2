@@ -1,4 +1,4 @@
-function subplot_spectral_estimates(s, M, legend_name)
+function subplot_spectral_estimates(s, M, legend_name, algo_name)
 
 % Divide signal into subsignals of interest, where noisy tones are constant
 samples_tones_change = [5000, 12000, 20000];
@@ -25,8 +25,9 @@ w=linspace(0, pi, 512);
 
 %figure
 subplot(2,2,1)
+sgtitle(sprintf('%s - Spectrum estimation (AR-50)', algo_name))
 semilogy(ws1,mags1.^2*sigma2_hat_s1, 'LineWidth', 1.5, 'DisplayName', legend_name);
-title('s1')
+title('Segement 1')
 xlabel('Frequency (rad/s)')
 ylabel('Magnitude')
 hold on
@@ -35,7 +36,7 @@ legend
 
 subplot(2,2,2)
 semilogy(ws2,mags2.^2*sigma2_hat_s2, 'LineWidth', 1.5, 'DisplayName', legend_name);
-title('s2')
+title('Segment 2')
 xlabel('Frequency (rad/s)')
 ylabel('Magnitude')
 hold on
@@ -44,7 +45,7 @@ legend
 
 subplot(2,2,3)
 semilogy(ws3,mags3.^2*sigma2_hat_s3, 'LineWidth', 1.5, 'DisplayName', legend_name);
-title('s3')
+title('Segment 3')
 xlabel('Frequency (rad/s)')
 ylabel('Magnitude')
 hold on
@@ -53,7 +54,7 @@ legend
 
 subplot(2,2,4)
 semilogy(ws4,mags4.^2*sigma2_hat_s4, 'LineWidth', 1.5, 'DisplayName', legend_name);
-title('s4')
+title('Segment 4')
 xlabel('Frequency (rad/s)')
 ylabel('Magnitude')
 hold on

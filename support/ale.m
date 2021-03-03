@@ -1,4 +1,5 @@
-function [y_hat, e_hat] = ale(s, N, D, muu_lambda, method)
+function [theta_hat, y_hat, e_hat] = ale(s, N, D, muu_lambda, method, ...
+    block_length, show)
 
 % [y_hat, e_hat]= ale_(y,N,muu)
 %
@@ -20,13 +21,6 @@ function [y_hat, e_hat] = ale(s, N, D, muu_lambda, method)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-figure('DefaultAxesFontSize',12)
-
-% -------- Parametric estimation of s(n) ---------
-% ------------------------------------------------
-M = 50;
-subplot_spectral_estimates(s, M, 'Input signal s(n)')
-
 
 % ------------- Adaptive filtering ---------------
 % ------------------------------------------------
@@ -35,44 +29,52 @@ subplot_spectral_estimates(s, M, 'Input signal s(n)')
 s_delayed = [zeros(D, 1); s(1:end-D)];
 
 switch method
-    case 'lms' 
+    case 'LMS' 
         % Estimate noisy tones y_hat(n) with LMS filtering
-        [theta_hat, y_hat] = lms(s, s_delayed, N, muu_lambda);
+        [theta_hat, y_hat] = clean_lms(s, s_delayed, N, muu_lambda);
 
         % Obtain error (speach signal) estimate
-        e_hat = s - y_hat; 
+        e_hat = s - y_hat;
         
-    case 'nlms'
+        
+    case 'NLMS'
         % Estimate noisy tones y_hat(n) with LMS filtering
         [theta_hat, y_hat] = nlms(s, s_delayed, N, muu_lambda);
 
         % Obtain error (speach signal) estimate
         e_hat = s - y_hat; 
 
-    case 'rls'
+    case 'RLS'
         % Estimate noisy tones y_hat(n) with RLS filtering
         [theta_hat, y_hat] = rls(s, s_delayed, N, muu_lambda);
 
         % Obtain error (speach signal) estimate
         e_hat = s - y_hat; 
         
+    case 'Block LMS'
+        % Estimate noisy tones y_hat(n) with Block LMS filtering
+        L = block_length;
+        [theta_hat, y_hat] = block_lms(s, s_delayed, N, L, muu_lambda);
+
+        % Obtain error (speach signal) estimate
+        e_hat = s - y_hat; 
     otherwise
         disp('No adaptive algorithm selected')
 end
 
-subplot_spectral_estimates(y_hat, M, 'Estimated noise tones y(n)')
-subplot_spectral_estimates(e_hat, M, 'Estimated speech e(n)')
 
-% samples = [4500, 11000, 19500, 32000];
-% for i=1:length(samples)
-%     figure
-%     w=linspace(0,pi);
-%     [magf,~,wf]=dbode(theta_hat(samples(i),:),1,1,w);
-%     plt = semilogy(wf, magf.^2);
-%     set(plt, 'LineWidth', 1.5)
-%     title('LMS adaptive filter response')
-%     xlabel('Frequency (rad/s)')
-%     ylabel('Magnitude')
-%     grid on
-%     set(gca,'FontSize', 12)
-% end
+% ----------- Parametric estimation  -------------
+% ------------------------------------------------
+
+if ~exist('show','var')
+     % if parameter 'show' doesn't exist, set to 1
+      show = 1;
+end
+
+if show
+    M = 50;
+    figure
+    subplot_spectral_estimates(s, M, 'Input signal s(n)', method)
+    subplot_spectral_estimates(y_hat, M, 'Estimated noise tones y(n)', method)
+    subplot_spectral_estimates(e_hat, M, 'Estimated speech e(n)', method)
+end

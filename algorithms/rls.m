@@ -28,7 +28,7 @@ function [thetahat,xhat]=rls(x,y,N,lambda)
 
 % Initialize P, xhat and thetahat
 M = length(x);
-P = eye(N) * 1000;
+P = eye(N) * 10000;
 xhat = zeros(M,1);
 thetahat = zeros(M+1,N);
 
